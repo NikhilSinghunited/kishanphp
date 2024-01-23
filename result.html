@@ -1,0 +1,98 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .body {
+            display: flex;
+            gap: 3%;
+            /* justify-content: space-around; */
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            margin-left: 24.5%;
+        }
+
+        .card {
+            width: 15%;
+            padding: 20px;
+            border: 2px solid #dcdcdc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .card input {
+            margin-top: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 80%;
+        }
+
+        h2 {
+            margin-top: 20px;
+            font-size: 20px;
+            color: orange;
+        }
+        #submitButton {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <form id="myForm" action="console.php" method="post" class="body">
+        <div class="card">
+            <h2>Prize 1</h2>
+            <input type="text" id="prize1" name="prizes[]" placeholder="Enter the value" />
+        </div>
+
+        <div class="card">
+            <h2>Prize 2</h2>
+            <input type="text" id="prize2" name="prizes[]" placeholder="Enter the value" />
+        </div>
+
+        <div class="card">
+            <h2>Prize 3</h2>
+            <input type="text" id="prize3" name="prizes[]" placeholder="Enter the value" />
+        </div>
+
+        <button type="button" id="submitButton" onclick="submitForm()">Submit</button>
+    </form>
+
+    <script>
+        function submitForm() {
+            const prize1Value = document.getElementById("prize1").value;
+            const prize2Value = document.getElementById("prize2").value;
+            const prize3Value = document.getElementById("prize3").value;
+
+           
+            const prizeList = [prize1Value, prize2Value, prize3Value];
+
+            console.log(prizeList)
+
+            fetch('console.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ prizeList: prizeList }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Server response:', data);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
